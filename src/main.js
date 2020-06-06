@@ -11,7 +11,7 @@ import axios from 'axios';
 // 根据环境设置baseurl
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
 if (typeof process.env.VUE_APP_AUTH != 'undefined')
-  axios.defaults.headers['Authorization'] = 'Token b6391658bcabae91faf2b9ceab30d9163c768e2c';
+  axios.defaults.headers['Authorization'] = process.env.VUE_APP_AUTH;
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);

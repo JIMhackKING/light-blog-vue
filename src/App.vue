@@ -42,7 +42,7 @@
             // 分页获取内容
             changePage: function (page) {
                 let vue = this;
-                this.axios.get("blog/entry/", {
+                this.axios.get("/blog/entry/", {
                     params: {page: page, per_page: this.perPage}
                 }).then(function (response) {
                     vue.blogs = response.data.entries;
@@ -52,7 +52,7 @@
         },
         mounted: function () {
             let vue = this;
-            this.axios.get("blog/entry/").then(function (response) {
+            this.axios.get("/blog/entry/").then(function (response) {
                 vue.blogs = response.data.entries;
                 vue.totalBlogs = response.data.total;
             });

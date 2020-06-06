@@ -12,11 +12,10 @@
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item href="#">统计中心</b-nav-item>
-                    <b-nav-item href="#">搜索中心</b-nav-item>
-                    <b-nav-item href="#">你好，
-                    </b-nav-item>
-                    <b-nav-item href="#">注销</b-nav-item>
+                    <b-nav-item href="/blog/statistics_center/">统计中心</b-nav-item>
+                    <b-nav-item href="/blog/search_center/">搜索中心</b-nav-item>
+                    <b-nav-item href="/users/information/">你好，</b-nav-item>
+                    <b-nav-item href="/users/logout/">注销</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
         </div>

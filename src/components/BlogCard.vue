@@ -81,7 +81,7 @@
             },
             deleteEntry: function (entry_id) {
                 var vue = this;
-                this.axios.delete("blog/entry/" + entry_id + "/detail/").then(function () {
+                this.axios.delete("/blog/entry/" + entry_id + "/detail/").then(function () {
                     // 触发父组件remove事件，在调用组件的时候传入
                     vue.$emit('remove');
                 })
