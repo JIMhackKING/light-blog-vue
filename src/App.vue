@@ -1,7 +1,10 @@
 <template>
     <div id="app">
-        <HeaderBar style="margin-bottom: 40px;"></HeaderBar>
-        <div class="container">
+        <HeaderBar style="margin-bottom: 40px"></HeaderBar>
+        <div class="container" style="/*margin-top: 100px*/">
+            <div>
+                <b-jumbotron header="记录你的生活点滴" lead="记录生活，写下学习的笔记，在这里，你可以畅所欲言"></b-jumbotron>
+            </div>
             <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
                       v-on:remove="blogs.splice(index, 1)"></BlogCard>
             <div class="overflow-auto">
