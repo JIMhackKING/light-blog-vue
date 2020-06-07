@@ -2,73 +2,30 @@
     <div id="app">
         <HeaderBar style="margin-bottom: 40px"></HeaderBar>
         <div class="container" style="/*margin-top: 100px*/">
-            <div>
-                <b-jumbotron header="记录你的生活点滴" lead="记录生活，写下学习的笔记，在这里，你可以畅所欲言"></b-jumbotron>
-            </div>
-            <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
-                      v-on:remove="blogs.splice(index, 1)"></BlogCard>
-            <div class="overflow-auto">
-                <b-pagination
-                        v-model="currentPage"
-                        :total-rows="totalBlogs"
-                        :per-page="perPage"
-                        align="center"
-                        v-on:change="changePage"
-                ></b-pagination>
-            </div>
+            <div class="page-header" v-html="pageHeader"></div>
+            <router-view v-on:renderHeader="renderHeader"></router-view>
         </div>
     </div>
 </template>
 
 <script>
     import HeaderBar from './components/Header';
-    import BlogCard from "./components/BlogCard";
 
     export default {
         name: "App",
-        components: {
-            HeaderBar,
-            BlogCard
-        },
         data() {
             return {
-                blogs: [],
-                currentPage: 1,
-                totalBlogs: 0,
-                perPage: 10
+                pageHeader: ''
             }
         },
         methods: {
-            // 分页获取内容
-            changePage: function (page) {
-                let vue = this;
-                this.axios.get("/blog/entry/", {
-                    params: {page: page, per_page: this.perPage}
-                }).then(function (response) {
-                    vue.blogs = response.data.entries;
-                    vue.totalBlogs = response.data.total;
-                })
+            renderHeader: function (msg) {
+                this.pageHeader = msg;
             }
         },
-        mounted: function () {
-            let vue = this;
-            this.axios.get("/blog/entry/").then(function (response) {
-                vue.blogs = response.data.entries;
-                vue.totalBlogs = response.data.total;
-            });
-            document.onkeydown = function (event) {
-                let e = event || window.event;
-                let current = vue.currentPage, perpage = vue.perPage, total = vue.totalBlogs;
-                // 键盘翻页
-                if (e && e.keyCode === 39 && current * perpage <= total) {
-                    vue.changePage(current + 1);
-                    vue.currentPage = current + 1;
-                } else if (e && e.keyCode === 37 && (current - 1) > 0) {
-                    vue.changePage(current - 1);
-                    vue.currentPage = current - 1;
-                }
-            }
-        },
+        components: {
+            HeaderBar
+        }
     };
 </script>
 
@@ -79,5 +36,11 @@
 
     .disabled {
         cursor: not-allowed;
+    }
+
+    .page-header {
+        padding-bottom: 9px;
+        margin: 40px 0 20px;
+        border-bottom: 1px solid #eee;
     }
 </style>

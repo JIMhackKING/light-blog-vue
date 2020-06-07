@@ -1,13 +1,18 @@
 <template>
     <b-navbar toggleable="lg" type="white" id="header">
         <div class="container">
-            <b-navbar-brand href="#" variant="secondary">卷积云博客</b-navbar-brand>
+            <b-navbar-brand to="/" variant="secondary">卷积云博客</b-navbar-brand>
 
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-navbar-toggle target="nav-collapse" style="border: 1px solid #cecece">
+                <template v-slot:default="{ expanded }">
+                    <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
+                    <b-icon v-else icon="chevron-bar-down"></b-icon>
+                </template>
+            </b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item href="#">主题</b-nav-item>
+                    <b-nav-item to="/topics">主题</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->

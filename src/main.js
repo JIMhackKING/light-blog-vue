@@ -2,11 +2,12 @@ import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import mavonEditor from 'mavon-editor';
 import App from "./App.vue";
+import axios from 'axios';
+import router from './router/index';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import 'mavon-editor/dist/css/index.css';
-import axios from 'axios';
 
 // 根据环境设置baseurl
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
@@ -23,5 +24,6 @@ Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  router
 }).$mount("#app");
