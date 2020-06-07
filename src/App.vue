@@ -2,8 +2,7 @@
     <div id="app">
         <HeaderBar style="margin-bottom: 40px"></HeaderBar>
         <div class="container" style="/*margin-top: 100px*/">
-            <div class="page-header" v-html="pageHeader"></div>
-            <router-view v-on:renderHeader="renderHeader"></router-view>
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -16,11 +15,6 @@
         data() {
             return {
                 pageHeader: ''
-            }
-        },
-        methods: {
-            renderHeader: function (msg) {
-                this.pageHeader = msg;
             }
         },
         components: {

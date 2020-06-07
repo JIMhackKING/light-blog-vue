@@ -1,9 +1,12 @@
 <template>
     <div>
+        <div class="page-header">
+            <h1>主题</h1>
+        </div>
         <b-list-group style="margin-bottom: 20px">
             <b-list-group-item v-for="(topic, index) in topics" v-bind:key="topic.id">
                 <span class="h3-inline">
-                    <b-link href="#" v-bind:class="{ 'hidden-link': topic.hidden }">
+                    <b-link :to="'/topic/' + topic.id" v-bind:class="{ 'hidden-link': topic.hidden }">
                         {{ topic.text }}
                     </b-link>
                 </span>
@@ -23,7 +26,8 @@
                     </b-button>
                 </b-button-group>
             </b-list-group-item>
-            <b-list-group-item v-if="!topics.length">还没有主题</b-list-group-item>
+            <b-list-group-item v-if="loading">加载中...</b-list-group-item>
+            <b-list-group-item v-else-if="!topics.length">还没有主题</b-list-group-item>
         </b-list-group>
 
         <h3><a href="#">添加一个主题</a></h3>
@@ -35,21 +39,19 @@
         name: "Topics",
         data() {
             return {
-                topics: []
+                topics: [],
+                loading: true
             }
         },
         mounted() {
             let vue = this;
             this.axios.get('/blog/topic/').then(function (response) {
                 vue.topics = response.data;
+            }).finally(function () {
+                vue.loading = false;
             });
-            vue.init();
         },
         methods: {
-            init: function () {
-                // 将父组件当做模板，给父组件标签插入内容
-                this.$emit("renderHeader", "<h1>主题</h1>");
-            },
             hideTopic: function (index) {
                 let vue = this;
                 let topic = this.topics[index];
