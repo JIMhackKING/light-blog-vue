@@ -47,7 +47,7 @@
             <b-card-text>
                 <div class="card-body" style="overflow:visible">
                     <!-- <mavon-editor v-model="value" :ishljs="true"/> -->
-                    <span v-html="convertHtml(this.$options.filters['strSlice'](blog.text, 200))"></span>
+                    <span v-html="convertHtml(summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text)"></span>
                 </div>
                 <div style="margin-left: 20px;">
                     <p>
@@ -80,6 +80,12 @@
             // 提供默认值
             blog: {type: Object},
             showTopicLink: {
+                type: Boolean,
+                default() {
+                    return true;
+                }
+            },
+            summary: {
                 type: Boolean,
                 default() {
                     return true;
