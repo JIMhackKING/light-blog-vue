@@ -18,9 +18,9 @@
             <template v-slot:header>
                 <h3>
                     <span title="点击查看更多信息" v-b-toggle="'info_' + blog.id">{{ blog.date_added|dateFormat("Y M月 DD日 hh:mm") }}</span>
-                    <small style="margin-left: 20px">
+                    <small style="margin-left: 20px" v-if="showTopicLink">
                     <span>
-                        <b-link href="#">
+                        <b-link :to="'/topic/' + blog.topic">
                             {{blog.topic_text}}
                         </b-link>
                     </span>
@@ -50,7 +50,9 @@
                     <span v-html="convertHtml(this.$options.filters['strSlice'](blog.text, 200))"></span>
                 </div>
                 <div style="margin-left: 20px;">
-                    <p><b-link href="#">查看详情...</b-link></p>
+                    <p>
+                        <b-link href="#">查看详情...</b-link>
+                    </p>
                 </div>
             </b-card-text>
         </b-card>
@@ -74,7 +76,16 @@
 
     export default {
         name: "BlogCard",
-        props: ['blog'],
+        props: {
+            // 提供默认值
+            blog: {type: Object},
+            showTopicLink: {
+                type: Boolean,
+                default() {
+                    return true;
+                }
+            }
+        },
         methods: {
             convertHtml: function (markdown) {
                 return marked(markdown);

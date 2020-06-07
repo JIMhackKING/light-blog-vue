@@ -20,7 +20,7 @@
             </b-button-group>
         </div>
         <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
-                  v-on:remove="blogs.splice(index, 1)"></BlogCard>
+                  v-on:remove="blogs.splice(index, 1)" :showTopicLink="false"></BlogCard>
         <div class="overflow-auto">
             <b-pagination
                     v-model="currentPage"
