@@ -8,7 +8,7 @@
                     <b-icon-plus></b-icon-plus>
                     添加条目
                 </b-button>
-                <b-button href="#" variant="outline-secondary" size="sm">
+                <b-button variant="outline-secondary" size="sm" id="topic-editor" ref="button">
                     <b-icon-pencil-square></b-icon-pencil-square>
                     编辑
                 </b-button>
@@ -17,6 +17,9 @@
                     <b-icon-eye-slash v-else></b-icon-eye-slash>
                     <span><span v-if="topic.hidden">取消</span>隐藏</span>
                 </b-button>
+                <!--主题编辑表单-->
+                <TopicPopover target="topic-editor" position="bottom" v-on:submit="editTopic"
+                              :text="topic.text"></TopicPopover>
             </b-button-group>
         </div>
         <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
@@ -36,11 +39,13 @@
 
 <script>
     import BlogCard from "./BlogCard";
+    import TopicPopover from "./TopicForm/TopicPopover";
 
     export default {
         name: "TopicEntries",
         components: {
-            BlogCard
+            BlogCard,
+            TopicPopover
         },
         data() {
             return {
@@ -81,6 +86,9 @@
                 let vue = this;
                 this.axios.put('/blog/topic/' + vue.topic.id + '/', {hidden: !vue.topic.hidden});
                 vue.topic.hidden = !vue.topic.hidden;
+            },
+            editTopic: function () {
+                console.log(this)
             },
             // 分页获取内容
             changePage: function (page) {
