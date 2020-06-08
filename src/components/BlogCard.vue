@@ -49,9 +49,9 @@
                     <!-- <mavon-editor v-model="value" :ishljs="true"/> -->
                     <span v-html="convertHtml(summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text)"></span>
                 </div>
-                <div style="margin-left: 20px;">
+                <div style="margin-left: 20px;" v-if="summary">
                     <p>
-                        <b-link href="#">查看详情...</b-link>
+                        <b-link :to="'/entry/' + blog.id">查看详情...</b-link>
                     </p>
                 </div>
             </b-card-text>
@@ -97,7 +97,7 @@
                 return marked(markdown);
             },
             deleteEntry: function (entry_id) {
-                var vue = this;
+                let vue = this;
                 this.axios.delete("/blog/entry/" + entry_id + "/detail/").then(function () {
                     // 触发父组件remove事件，在调用组件的时候传入
                     vue.$emit('remove');

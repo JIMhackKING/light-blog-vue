@@ -21,7 +21,8 @@
         </div>
         <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
                   v-on:remove="blogs.splice(index, 1)" :showTopicLink="false"></BlogCard>
-        <div class="overflow-auto">
+        <span v-if="!loading && !blogs.length">该主题下还没有任何内容。</span>
+        <div class="overflow-auto" v-if="blogs.length">
             <b-pagination
                     v-model="currentPage"
                     :total-rows="totalBlogs"
