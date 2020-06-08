@@ -5,7 +5,7 @@
         </div>
         <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
                   v-on:remove="blogs.splice(index, 1)"></BlogCard>
-        <div class="overflow-auto">
+        <div class="overflow-auto" v-if="blogs.length">
             <b-pagination
                     v-model="currentPage"
                     :total-rows="totalBlogs"
@@ -13,6 +13,15 @@
                     align="center"
                     v-on:change="changePage"
             ></b-pagination>
+        </div>
+<!--        没有博客时显示的文字-->
+        <div v-if="!loading && totalTopic && !blogs.length">
+            <h2>欢迎回来，<span class="username"></span></h2>
+            <h2>快<a href="#">点击这里</a>去写一篇属于你自己的博客吧</h2>
+        </div>
+        <div v-else-if="!loading && !totalTopic">
+            <h2>欢迎回来，username</h2>
+            <h2>快去<a href="#">创建一个属于你的主题</a>吧</h2>
         </div>
     </div>
 </template>
@@ -30,7 +39,9 @@
                 blogs: [],
                 currentPage: 1,
                 totalBlogs: 0,
-                perPage: 10
+                perPage: 10,
+                loading: true,
+                totalTopic: false
             }
         },
         methods: {
@@ -42,7 +53,12 @@
                 }).then(function (response) {
                     vue.blogs = response.data.entries;
                     vue.totalBlogs = response.data.total;
-                })
+                });
+                this.axios.get('/blog/topic/').then(function (response) {
+                    vue.totalTopic = response.data.length;
+                }).finally(function () {
+                    vue.loading = false;
+                });
             }
         },
         mounted: function () {
