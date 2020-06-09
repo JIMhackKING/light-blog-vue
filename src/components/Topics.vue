@@ -15,7 +15,7 @@
                         <b-icon-plus></b-icon-plus>
                         添加条目
                     </b-button>
-                    <b-button href="#" variant="outline-secondary" size="sm">
+                    <b-button href="#" variant="outline-secondary" size="sm" :id="'topic_' + topic.id">
                         <b-icon-pencil-square></b-icon-pencil-square>
                         编辑
                     </b-button>
@@ -24,6 +24,9 @@
                         <b-icon-eye-slash v-else></b-icon-eye-slash>
                         <span><span v-if="topic.hidden">取消</span>隐藏</span>
                     </b-button>
+<!--                    sync修饰符可以动态修改父组件某个值，子组件用事件触发-->
+                    <TopicPopover :target="'topic_' + topic.id" position="bottom"
+                                  :topic.sync="topic" v-on:submit="editTopic(index)"></TopicPopover>
                 </b-button-group>
             </b-list-group-item>
             <b-list-group-item v-if="loading">加载中...</b-list-group-item>
@@ -35,8 +38,13 @@
 </template>
 
 <script>
+    import TopicPopover from "./TopicForm/TopicPopover";
+
     export default {
         name: "Topics",
+        components: {
+            TopicPopover
+        },
         data() {
             return {
                 topics: [],
@@ -57,6 +65,14 @@
                 let topic = this.topics[index];
                 this.axios.put('/blog/topic/' + topic.id + '/', {hidden: !topic.hidden});
                 vue.topics[index].hidden = !topic.hidden;
+            },
+            editTopic: function (index) {
+                let vue = this;
+                let topic = this.topics[index]
+                this.axios.put('/blog/topic/' + topic.id + '/detail/', {text: topic.text}).then(function (response) {
+                    // 替换数组某个值
+                    vue.topics.splice(index, 1, response.data);
+                })
             }
         }
     }

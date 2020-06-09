@@ -1,7 +1,7 @@
 <template>
     <b-popover
             :target="target"
-            triggers="click"
+            triggers="focus"
             :show.sync="popoverShow"
             :placement="position"
             container="topic-container"
@@ -27,7 +27,7 @@
 
             <b-button-group>
                 <b-button @click="onOk" size="sm" variant="primary">保存</b-button>
-                <b-button @click="onClose" size="sm" variant="default">取消</b-button>
+                <b-button @click="onClose" size="sm" :variant="resetButtonType">{{resetButtonText}}</b-button>
             </b-button-group>
         </div>
     </b-popover>
@@ -46,33 +46,48 @@
                     return 'auto'
                 }
             },
-            text: {
-                type: String,
+            topic: {
+                type: Object,
                 default() {
-                    return ''
+                    return {}
                 }
             }
         },
         data() {
             return {
-                textInput: this.text || '',
+                textInput: this.topic.text || '',
+                textInputReturn: this.topic.text || '',
                 textState: null,
-                textInputReturn: '',
-                popoverShow: false
+                popoverShow: false,
+            }
+        },
+        computed: {
+            resetButtonType: function () {
+                return this.textInput === this.textInputReturn ? 'default' : 'danger';
+            },
+            resetButtonText: function () {
+                return this.textInput === this.textInputReturn ? '取消' : '重置';
             }
         },
         methods: {
             onClose() {
-                this.popoverShow = false
+                if (this.resetButtonType === 'default') {
+                    this.popoverShow = false;
+                } else {
+                    this.textInput = this.textInputReturn;
+                }
             },
             onOk() {
                 if (!this.textInput) {
                     this.textState = false
                 } else {
-                    this.onClose()
-                    // Return our popover form results
+                    this.popoverShow = false;
                     this.textInputReturn = this.textInput;
                 }
+
+                let newTopic = this.topic;
+                newTopic.text = this.textInputReturn
+                this.$emit('update:topic', newTopic)
                 this.$emit('submit');
             },
             onShow() {

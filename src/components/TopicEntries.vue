@@ -19,7 +19,7 @@
                 </b-button>
                 <!--主题编辑表单-->
                 <TopicPopover target="topic-editor" position="bottom" v-on:submit="editTopic"
-                              :text="topic.text"></TopicPopover>
+                              :topic.sync="topic"></TopicPopover>
             </b-button-group>
         </div>
         <BlogCard v-for="(blog, index) in blogs" v-bind:key="blog.id" v-bind:blog="blog"
@@ -88,7 +88,10 @@
                 vue.topic.hidden = !vue.topic.hidden;
             },
             editTopic: function () {
-                console.log(this)
+                let vue = this;
+                this.axios.put('/blog/topic/' + this.$route.params.topic_id + '/detail/', {text: this.topic.text}).then(function (response) {
+                    vue.topic = response.data;
+                })
             },
             // 分页获取内容
             changePage: function (page) {
