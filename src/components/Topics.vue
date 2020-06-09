@@ -55,7 +55,6 @@
             let vue = this;
             this.axios.get('/blog/topic/').then(function (response) {
                 vue.topics = response.data;
-            }).finally(function () {
                 vue.loading = false;
             });
         },

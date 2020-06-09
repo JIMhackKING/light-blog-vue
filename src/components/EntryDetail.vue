@@ -26,7 +26,6 @@
             let vue = this;
             this.axios.get('/blog/entry/' + this.$route.params.entry_id + '/detail/').then(function (response) {
                 vue.blog = response.data;
-            }).finally(function () {
                 vue.loading = false;
             });
         },

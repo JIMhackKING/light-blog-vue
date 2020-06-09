@@ -61,7 +61,6 @@
             let vue = this;
             this.axios.get('/blog/topic/' + this.$route.params.topic_id + '/detail/').then(function (response) {
                 vue.topic = response.data;
-            }).finally(function () {
                 vue.loading = false;
             });
             this.axios.get('/blog/topic/' + this.$route.params.topic_id + '/').then(function (response) {

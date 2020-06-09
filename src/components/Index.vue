@@ -56,7 +56,6 @@
                 });
                 this.axios.get('/blog/topic/').then(function (response) {
                     vue.totalTopic = response.data.length;
-                }).finally(function () {
                     vue.loading = false;
                 });
             }
