@@ -16,7 +16,13 @@ export default new Router({
         path: '/topic/:topic_id',
         component: resolve => require(['../components/TopicEntries'], resolve)
     }, {
-        path: '/entry/:entry_id',
+        path: '/entry/:entry_id/detail',
         component: resolve => require(['../components/EntryDetail'], resolve)
+    }, {
+        path: '/new_entry/:topic_id',
+        component: resolve => require(['../components/EditEntry'], resolve)
+    }, {
+        path: '/entry/:entry_id',
+        component: resolve => require(['../components/EditEntry'], resolve)
     }]
 })

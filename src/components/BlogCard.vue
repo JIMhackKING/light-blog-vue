@@ -27,7 +27,7 @@
                     </small>
                     <small style="float: right">
                         <b-button-group>
-                            <b-button variant="outline-secondary" href="#">
+                            <b-button variant="outline-secondary" :to="'/entry/' + blog.id">
                                 <b-icon-pencil-square></b-icon-pencil-square>
                                 编辑
                             </b-button>
@@ -51,7 +51,7 @@
                 </div>
                 <div style="margin-left: 20px;" v-if="summary">
                     <p>
-                        <b-link :to="'/entry/' + blog.id">查看详情...</b-link>
+                        <b-link :to="'/entry/' + blog.id + '/detail'">查看详情...</b-link>
                     </p>
                 </div>
             </b-card-text>

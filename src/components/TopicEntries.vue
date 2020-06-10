@@ -4,7 +4,7 @@
             <h2 v-if="loading">加载中...</h2>
             <h2 v-else>{{ topic.text }}</h2>
             <b-button-group class="btn-right" v-if="!loading">
-                <b-button href="#" variant="outline-secondary" size="sm">
+                <b-button :to="'/new_entry/' + topic.id" variant="outline-secondary" size="sm">
                     <b-icon-plus></b-icon-plus>
                     添加条目
                 </b-button>

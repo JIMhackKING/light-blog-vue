@@ -11,11 +11,11 @@
                     </b-link>
                 </span>
                 <b-button-group class="btn-right">
-                    <b-button href="#" variant="outline-secondary" size="sm">
+                    <b-button :to="'/new_entry/' + topic.id" variant="outline-secondary" size="sm">
                         <b-icon-plus></b-icon-plus>
                         添加条目
                     </b-button>
-                    <b-button href="#" variant="outline-secondary" size="sm" :id="'topic_' + topic.id">
+                    <b-button variant="outline-secondary" size="sm" :id="'topic_' + topic.id">
                         <b-icon-pencil-square></b-icon-pencil-square>
                         编辑
                     </b-button>
@@ -33,7 +33,7 @@
             <b-list-group-item v-else-if="!topics.length">还没有主题</b-list-group-item>
         </b-list-group>
 
-        <b-button href="#" variant="primary" id="addTopic">
+        <b-button variant="primary" id="addTopic">
             添加一个主题
         </b-button>
         <TopicPopover target="addTopic" position="bottom" v-on:submit="newTopic" ref="addTopic"></TopicPopover>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import TopicPopover from "./TopicForm";
+    import TopicPopover from "./TopicForm/TopicPopover";
 
     export default {
         name: "Topics",
