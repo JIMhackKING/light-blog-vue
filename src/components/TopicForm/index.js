@@ -1,1 +1,3 @@
-export { default as TopicPopover } from './TopicPopover';
+import TopicPopover from "./TopicPopover";
+
+export default {TopicPopover}

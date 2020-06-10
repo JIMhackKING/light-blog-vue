@@ -33,12 +33,15 @@
             <b-list-group-item v-else-if="!topics.length">还没有主题</b-list-group-item>
         </b-list-group>
 
-        <h3><a href="#">添加一个主题</a></h3>
+        <b-button href="#" variant="primary" id="addTopic">
+            添加一个主题
+        </b-button>
+        <TopicPopover target="addTopic" position="bottom" v-on:submit="newTopic" ref="addTopic"></TopicPopover>
     </div>
 </template>
 
 <script>
-    import TopicPopover from "./TopicForm/TopicPopover";
+    import TopicPopover from "./TopicForm";
 
     export default {
         name: "Topics",
@@ -72,6 +75,15 @@
                     // 替换数组某个值
                     vue.topics.splice(index, 1, response.data);
                 })
+            },
+            newTopic: function (topicText) {
+                let vue = this;
+                this.axios.post('/blog/topic/', {text: topicText}).then(function (response) {
+                    vue.topics.push(response.data);
+                })
+                // 清除子组件输入框的内容
+                this.$refs.addTopic.textInputReturn = '';
+                this.$refs.addTopic.textInput = '';
             }
         }
     }

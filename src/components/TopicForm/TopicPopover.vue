@@ -88,7 +88,7 @@
                 let newTopic = this.topic;
                 newTopic.text = this.textInputReturn
                 this.$emit('update:topic', newTopic)
-                this.$emit('submit');
+                this.$emit('submit', this.textInputReturn);
             },
             onShow() {
                 // This is called just before the popover is shown
