@@ -1,9 +1,5 @@
 import Vue from "vue";
 import Router from 'vue-router';
-import Index from "../components/Index";
-import Topics from "../components/Topics";
-import TopicEntries from "../components/TopicEntries";
-import EntryDetail from "../components/EntryDetail";
 
 Vue.use(Router)
 
@@ -11,16 +7,16 @@ export default new Router({
     name: 'router',
     routes: [{
         path: '/',
-        component: Index
+        component: resolve => require(['../components/Index'], resolve)
     }, {
         path: '/topics',
-        component: Topics
+        component: resolve => require(['../components/Topics'], resolve)
     }, {
         name: 'TopicEntries',
         path: '/topic/:topic_id',
-        component: TopicEntries
+        component: resolve => require(['../components/TopicEntries'], resolve)
     }, {
         path: '/entry/:entry_id',
-        component: EntryDetail
+        component: resolve => require(['../components/EntryDetail'], resolve)
     }]
 })
