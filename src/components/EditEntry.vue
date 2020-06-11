@@ -48,7 +48,9 @@
         },
         methods: {
             onSubmit: function (event, type) {
-                event.preventDefault();
+                if (event) {
+                    event.preventDefault();
+                }
                 this.uploading = true;
 
                 let entry_id = this.$route.params.entry_id;

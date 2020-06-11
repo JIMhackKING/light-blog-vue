@@ -46,8 +46,13 @@
             </template>
             <b-card-text>
                 <div class="card-body" style="overflow:visible">
-                    <!-- <mavon-editor v-model="value" :ishljs="true"/> -->
-                    <span v-html="convertHtml(summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text)"></span>
+                    <!-- 仅预览模式 -->
+                    <mavon-editor :toolbarsFlag="false" :subfield="false" defaultOpen="preview"
+                                  :value="summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text"
+                                  :boxShadow="false"
+                                  :ishljs="true"
+                                  style="min-height: 0;min-width: 0"
+                    />
                 </div>
                 <div style="margin-left: 20px;" v-if="summary">
                     <p>
@@ -61,18 +66,6 @@
 
 <script>
     import moment from 'moment';
-    import marked from 'marked';
-
-    marked.setOptions({ // marked 设置
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false
-    })
 
     export default {
         name: "BlogCard",
@@ -93,9 +86,6 @@
             }
         },
         methods: {
-            convertHtml: function (markdown) {
-                return marked(markdown);
-            },
             deleteEntry: function (entry_id) {
                 let vue = this;
                 this.axios.delete("/blog/entry/" + entry_id + "/detail/").then(function () {
@@ -118,6 +108,8 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .v-show-content {
+        padding: 0 !important;
+    }
 </style>
