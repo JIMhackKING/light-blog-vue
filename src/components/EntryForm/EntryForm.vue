@@ -43,7 +43,7 @@
         },
         methods: {
             onSubmit: function (event, type='save') {
-                this.$emit('submit', event, this.entry, type);
+                this.$emit('submit', event, type);
             }
         }
     }

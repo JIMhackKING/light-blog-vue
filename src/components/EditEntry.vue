@@ -47,7 +47,7 @@
             }
         },
         methods: {
-            onSubmit: function (event, entry, type) {
+            onSubmit: function (event, type) {
                 event.preventDefault();
                 this.uploading = true;
 
@@ -55,7 +55,7 @@
                 let topic_id = this.$route.params.topic_id;
                 let vue = this;
 
-                if (!vue.entry.text || entry.text) {
+                if (!vue.entry.text) {
                     vue.makeToast("保存失败", "内容是必填项", 'danger');
                     this.uploading = false;
                     return false;
@@ -68,17 +68,16 @@
                             vue.redirect();
                         } else {
                             vue.makeToast("保存成功", "保存成功");
+                            // 替换路径，让用户刷新时还在新的文章编写界面
+                            vue.$router.replace({path: '/entry/' + response.data.id})
                         }
-
-                        // 替换路径，让用户刷新时还在新的文章编写界面
-                        vue.$router.replace({path: '/entry/' + response.data.id})
                     }).catch(function () {
                         vue.makeToast("保存失败", "保存失败，请重试，如仍然失败请自行备份并联系管理员处理", 'danger');
                     }).finally(function () {
                         vue.uploading = false;
                     })
                 } else if (entry_id) {
-                    this.axios.put('/blog/entry/' + entry_id + '/detail/', entry).then(function (response) {
+                    this.axios.put('/blog/entry/' + entry_id + '/detail/', vue.entry).then(function (response) {
                         vue.entry = response.data;
                         if (type !== 'saveAndEdit') {
                             vue.redirect();
