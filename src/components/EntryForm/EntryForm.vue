@@ -14,13 +14,7 @@
         </b-form-group>
 
         <b-form-group label="内容" label-for="textInput">
-            <b-form-textarea
-                    required
-                    id="textInput"
-                    v-model="entry.text"
-                    placeholder="内容"
-                    rows="6"
-            ></b-form-textarea>
+            <mavon-editor style="z-index: 1;" v-model="entry.text"/>
         </b-form-group>
 
         <b-button type="submit" variant="primary">保存</b-button>
