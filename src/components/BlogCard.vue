@@ -51,7 +51,7 @@
                                   :value="summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text"
                                   :boxShadow="false"
                                   :ishljs="true"
-                                  style="min-height: 0;min-width: 0"
+                                  style="min-height: 0;min-width: 0;border: 0"
                     />
                 </div>
                 <div style="margin-left: 20px;" v-if="summary">
@@ -108,8 +108,10 @@
     }
 </script>
 
-<style>
-    .v-show-content {
+<style scoped>
+/*深度选择器，可以修改子组件样式*/
+    >>> .v-show-content {
         padding: 0 !important;
+        background-color: unset !important;
     }
 </style>
