@@ -19,7 +19,7 @@
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item href="/blog/statistics_center/">统计中心</b-nav-item>
                     <b-nav-item href="/blog/search_center/">搜索中心</b-nav-item>
-                    <b-nav-item href="/users/information/" v-if="verified">你好，username</b-nav-item>
+                    <b-nav-item v-if="verified">你好，{{username}}</b-nav-item>
                     <b-nav-item v-on:click="logout" v-if="verified">注销</b-nav-item>
                     <b-nav-item v-on:click="$bvModal.show('LoginModal')" v-else>登录</b-nav-item>
                 </b-navbar-nav>
@@ -37,16 +37,48 @@
         components: {LoginModal},
         data() {
             return {
-                verified: false
+                verified: false,
+                userInfo: {}
             }
+        },
+        computed: {
+            username: function () {
+                if (this.userInfo.first_name && this.userInfo.last_name) {
+                    return this.userInfo.first_name + ' ' + this.userInfo.last_name;
+                } else {
+                    return this.userInfo.username;
+                }
+            }
+        },
+        mounted() {
+            let vue = this;
+            let token = localStorage.getItem('token');
+            let user = localStorage.getItem('user');
+            if (!token || !user) return;
+            user = JSON.parse(user);
+
+            this.axios.get('/users/', {params: {token: token}}).then(function () {
+                // 记录用户信息和Token
+                vue.axios.defaults.headers['Authorization'] = 'Token ' + token;
+                vue.userInfo = user;
+                vue.verified = true;
+            })
         },
         methods: {
             logout: function () {
                 delete this.axios.defaults.headers['Authorization'];
                 this.verified = false;
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                this.$router.push("/");
             },
             login: function (response) {
-                console.log(response);
+                this.userInfo = response.user;
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('user', JSON.stringify(response.user));
+                this.verified = true;
+                // 重定向
+                this.$router.push("/");
             }
         }
     }
