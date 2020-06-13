@@ -51,7 +51,7 @@
                                   :value="summary ? this.$options.filters['strSlice'](blog.text, 200) : blog.text"
                                   :boxShadow="false"
                                   :ishljs="true"
-                                  style="min-height: 0;min-width: 0;border: 0"
+                                  style="min-height: 0;min-width: 0;border: 0;position:unset"
                     />
                 </div>
                 <div style="margin-left: 20px;" v-if="summary">

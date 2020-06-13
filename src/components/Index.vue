@@ -41,7 +41,7 @@
                 totalBlogs: 0,
                 perPage: 10,
                 loading: true,
-                totalTopic: false
+                totalTopic: 0
             }
         },
         methods: {
@@ -54,10 +54,6 @@
                     vue.blogs = response.data.entries;
                     vue.totalBlogs = response.data.total;
                 });
-                this.axios.get('/blog/topic/').then(function (response) {
-                    vue.totalTopic = response.data.length;
-                    vue.loading = false;
-                });
             }
         },
         mounted: function () {
@@ -65,6 +61,11 @@
             this.axios.get("/blog/entry/").then(function (response) {
                 vue.blogs = response.data.entries;
                 vue.totalBlogs = response.data.total;
+            });
+            this.axios.get('/blog/topic/').then(function (response) {
+                vue.totalTopic = response.data.length;
+            }).finally(function () {
+                vue.loading = false;
             });
             document.onkeydown = function (event) {
                 let e = event || window.event;
