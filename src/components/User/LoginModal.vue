@@ -1,33 +1,37 @@
 <template>
-    <b-modal id="LoginModal" centered title="登录" @ok="login">    
-        <b-form>
-            <b-form-group
-                    label="用户名"
-                    label-for="username"
-            >
-                <b-form-input
-                        id="username"
-                        type="text"
-                        placeholder="用户名"
-                        v-model="username"
-                        required
-                ></b-form-input>
-            </b-form-group>
+    <b-modal id="LoginModal" centered title="登录" @ok="login">
+        <template v-slot:default="{ ok }">
+            <b-form>
+                <b-form-group
+                        label="用户名"
+                        label-for="username"
+                >
+                    <b-form-input
+                            id="username"
+                            type="text"
+                            placeholder="用户名"
+                            v-model="username"
+                            required
+                            @keydown.13="ok()"
+                    ></b-form-input>
+                </b-form-group>
 
-            <b-form-group
-                    label="密码"
-                    label-for="password"
-            >
-                <b-form-input
-                        id="password"
-                        type="password"
-                        placeholder="密码"
-                        v-model="password"
-                        required
-                ></b-form-input>
-            </b-form-group>
-        </b-form>
-        <b-alert variant="danger" v-if="validateCallback" show>{{validateCallback}}</b-alert>
+                <b-form-group
+                        label="密码"
+                        label-for="password"
+                >
+                    <b-form-input
+                            id="password"
+                            type="password"
+                            placeholder="密码"
+                            v-model="password"
+                            required
+                            @keydown.13="ok()"
+                    ></b-form-input>
+                </b-form-group>
+                <b-alert variant="danger" v-if="validateCallback" show>{{validateCallback}}</b-alert>
+            </b-form>
+        </template>
         <template v-slot:modal-footer="{ok}">
             <b-button variant="primary" v-on:click="ok()">登录</b-button>
         </template>
@@ -78,12 +82,12 @@
                 bvModalEvent.preventDefault();
                 this.checkFormValidity().then(function (response) {
                     if (response) {
+                        vue.username = '';
+                        vue.password = '';
                         // Hide the modal manually
                         vue.$nextTick(() => {
                             vue.$bvModal.hide('LoginModal');
                         })
-                        vue.username = '';
-                        vue.password = '';
                         vue.$emit('login', vue.loginResponse);
                     }
                 })
