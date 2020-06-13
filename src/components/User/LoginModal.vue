@@ -1,6 +1,6 @@
 <template>
     <b-modal id="LoginModal" centered title="登录" @ok="login">    
-        <b-form ref="loginForm">
+        <b-form>
             <b-form-group
                     label="用户名"
                     label-for="username"
@@ -36,7 +36,7 @@
 
 <script>
     export default {
-        name: "EntryForm",
+        name: "LoginModal",
         data() {
             return {
                 username: '',

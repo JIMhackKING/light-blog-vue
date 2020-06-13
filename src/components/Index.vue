@@ -15,15 +15,15 @@
             ></b-pagination>
         </div>
 <!--        没有博客时显示的文字-->
-<!--         <div v-if="!loading && totalTopic && !blogs.length">
-            <h2>欢迎回来，<span class="username"></span></h2>
-            <h2>快<a href="#">点击这里</a>去写一篇属于你自己的博客吧</h2>
+        <div v-if="!loading && totalTopic && !blogs.length">
+            <h2>欢迎回来，<span class="username">{{username}}</span></h2>
+            <h2>快去写一篇属于你自己的博客吧</h2>
         </div>
         <div v-else-if="!loading && !totalTopic">
-            <h2>欢迎回来，username</h2>
-            <h2>快去<a href="#">创建一个属于你的主题</a>吧</h2>
+            <h2>欢迎回来，{{username}}</h2>
+            <h2>快去<b-link to="/topics">创建</b-link>一个属于你的主题吧</h2>
         </div>
- -->    </div>
+    </div>
 </template>
 
 <script>
@@ -34,6 +34,7 @@
         components: {
             BlogCard
         },
+        props: ['username'],
         data() {
             return {
                 blogs: [],

@@ -16,12 +16,14 @@
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
+                <b-navbar-nav class="ml-auto" v-if="verified">
                     <b-nav-item href="/blog/statistics_center/">统计中心</b-nav-item>
                     <b-nav-item href="/blog/search_center/">搜索中心</b-nav-item>
-                    <b-nav-item v-if="verified">你好，{{username}}</b-nav-item>
-                    <b-nav-item v-on:click="logout" v-if="verified">注销</b-nav-item>
-                    <b-nav-item v-on:click="$bvModal.show('LoginModal')" v-else>登录</b-nav-item>
+                    <b-nav-item>你好，{{username}}</b-nav-item>
+                    <b-nav-item v-on:click="logout">注销</b-nav-item>
+                </b-navbar-nav>
+                <b-navbar-nav class="ml-auto" v-else>
+                    <b-nav-item v-on:click="$bvModal.show('LoginModal')">登录</b-nav-item>
                 </b-navbar-nav>
                 <LoginModal v-on:login="login"></LoginModal>
             </b-collapse>
@@ -54,14 +56,25 @@
             let vue = this;
             let token = localStorage.getItem('token');
             let user = localStorage.getItem('user');
-            if (!token || !user) return;
+            if (!token || !user) {
+                this.$bvModal.show('LoginModal');
+                this.$bvToast.toast("目前本站所有功能都需要先登录后才能继续使用", {
+                    title: "请先登录",
+                    autoHideDelay: 3000,
+                    variant: 'info',
+                    appendToast: true
+                })
+                return;
+            }
             user = JSON.parse(user);
 
+            // 校验核对用户信息
             this.axios.get('/users/', {params: {token: token}}).then(function () {
                 // 记录用户信息和Token
                 vue.axios.defaults.headers['Authorization'] = 'Token ' + token;
                 vue.userInfo = user;
                 vue.verified = true;
+                vue.$emit("login");
             })
         },
         methods: {
@@ -70,15 +83,15 @@
                 this.verified = false;
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
-                this.$router.push("/");
+                this.$emit("logout");
             },
             login: function (response) {
                 this.userInfo = response.user;
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify(response.user));
+                this.axios.defaults.headers['Authorization'] = 'Token ' + response.token;
                 this.verified = true;
-                // 重定向
-                this.$router.push("/");
+                this.$emit("login");
             }
         }
     }
