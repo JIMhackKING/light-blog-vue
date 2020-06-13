@@ -82,7 +82,7 @@
         },
         destroyed: function () {
             document.onkeydown = null;
-        }
+        },
         methods: {
             hideTopic: function () {
                 let vue = this;

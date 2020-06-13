@@ -15,11 +15,14 @@
 
         <b-form-group label="内容" label-for="textInput">
             <mavon-editor
+                    ref="editor"
                     style="z-index: 1;max-height: 500px"
                     v-model="entry.text"
                     :ishljs="true"
                     :toolbars="toolbars"
                     @save="onSubmit(null, 'saveAndEdit')"
+                    @imgAdd="$imgAdd"
+                    @imgDel="$imgDel"
             />
         </b-form-group>
 
@@ -83,6 +86,21 @@
         methods: {
             onSubmit: function (event, type='save') {
                 this.$emit('submit', event, type);
+            },
+            $imgAdd: function (pos, $file) {
+                // 将图片上传到服务器
+                let vue = this;
+                let formdata = new FormData();
+                formdata.append('image', $file);
+                this.axios.post("/blog/upload_img/", formdata, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then((response) => {  // ES6的写法
+                    console.log(response);
+                    vue.$refs.editor.$img2Url(pos, '#');  // 修改图片链接
+                })
+            },
+            $imgDel: function (pos) {
+                console.log(pos);
             }
         }
     }
