@@ -69,6 +69,7 @@
                 vue.loading = false;
             });
             document.onkeydown = function (event) {
+                console.log("right")
                 let e = event || window.event;
                 let current = vue.currentPage, perpage = vue.perPage, total = vue.totalBlogs;
                 // 键盘翻页
@@ -80,6 +81,9 @@
                     vue.currentPage = current - 1;
                 }
             }
+        },
+        destroyed: function () {
+            document.onkeydown = null;
         }
     }
 </script>
