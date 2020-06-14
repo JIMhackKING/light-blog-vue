@@ -11,8 +11,8 @@ import 'mavon-editor/dist/css/index.css';
 
 // 根据环境设置baseurl
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-// if (typeof process.env.VUE_APP_AUTH != 'undefined')
-//   axios.defaults.headers['Authorization'] = process.env.VUE_APP_AUTH;
+if (typeof process.env.VUE_APP_AUTH != 'undefined')
+  axios.defaults.headers['Authorization'] = process.env.VUE_APP_AUTH;
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);
