@@ -6,4 +6,5 @@ module.exports = {
     publicPath: '/static/learning_logs',  // 打包后的静态路径
     // 没有书写outputDir属性   默认'dist'  对应dev.assetsSubDirectory.
     // outputDir: 'dist/static',
+    productionSourceMap: false,
 };
