@@ -95,8 +95,7 @@
                 this.axios.post("/blog/upload_img/", formdata, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((response) => {  // ES6的写法
-                    console.log(response);
-                    vue.$refs.editor.$img2Url(pos, '#');  // 修改图片链接
+                    vue.$refs.editor.$img2Url(pos, response.data.link);  // 修改图片链接
                 })
             },
             $imgDel: function (pos) {
