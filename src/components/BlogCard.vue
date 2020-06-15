@@ -114,4 +114,9 @@
         padding: 0 !important;
         background-color: unset !important;
     }
+    /*
+    >>> .markdown-body img {
+        max-height: 300px;
+    }
+    */
 </style>

@@ -84,6 +84,19 @@
             }
         },
         methods: {
+            getUrlRelativePath: function (url) {
+                /* 获取当前地址，如http://www.xxx.com */
+                let arrUrl;
+                if (url) {
+                    arrUrl = url.split("//");
+                } else {
+                    arrUrl = document.location.toString().split("//");
+                }
+
+                var start = arrUrl[1].indexOf("/");
+                var relUrl = arrUrl[1].substring(0, start);
+                return arrUrl[0] + '//' + relUrl;
+            },
             onSubmit: function (event, type='save') {
                 this.$emit('submit', event, type);
             },
@@ -95,10 +108,12 @@
                 this.axios.post("/blog/upload_img/", formdata, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then((response) => {  // ES6的写法
-                    vue.$refs.editor.$img2Url(pos, response.data.link);  // 修改图片链接
+                    vue.$refs.editor.$img2Url(pos, (process.env.NODE_ENV === 'development' ? vue.getUrlRelativePath(process.env.VUE_APP_BASE_URL) : '') + response.data.link);  // 修改图片链接
                 })
             },
             $imgDel: function (pos) {
+                // 如果是编辑，可以在后端保存当前条目id到文件名中，然后去搜索和删除
+                // 如果是新建，则可以在保存的时候将editor的图片链接改掉，并且将本地临时保存的图片名字也做修改，记录上条目ID
                 console.log(pos);
             }
         }
