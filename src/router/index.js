@@ -7,22 +7,22 @@ export default new Router({
     name: 'router',
     routes: [{
         path: '/',
-        component: resolve => require(['../components/Index'], resolve)
+        component: () => import(/* webpackChunkName: "index" */'../components/Index.vue')
     }, {
         path: '/topics',
-        component: resolve => require(['../components/Topics'], resolve)
+        component: () => import(/* webpackChunkName: "topics" */'../components/Topics.vue')
     }, {
         name: 'TopicEntries',
         path: '/topic/:topic_id',
-        component: resolve => require(['../components/TopicEntries'], resolve)
+        component: () => import(/* webpackChunkName: "topic_entries" */'../components/TopicEntries.vue')
     }, {
         path: '/entry/:entry_id/detail',
-        component: resolve => require(['../components/EntryDetail'], resolve)
+        component: () => import(/* webpackChunkName: "entry_detail" */'../components/EntryDetail.vue')
     }, {
         path: '/new_entry/:topic_id',
-        component: resolve => require(['../components/EditEntry'], resolve)
+        component: () => import(/* webpackChunkName: "edit_entry" */'../components/EditEntry.vue')
     }, {
         path: '/entry/:entry_id',
-        component: resolve => require(['../components/EditEntry'], resolve)
+        component: () => import(/* webpackChunkName: "edit_entry" */'../components/EditEntry.vue')
     }]
 })

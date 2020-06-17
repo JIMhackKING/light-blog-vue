@@ -7,4 +7,15 @@ module.exports = {
     // 没有书写outputDir属性   默认'dist'  对应dev.assetsSubDirectory.
     // outputDir: 'dist/static',
     productionSourceMap: false,
+    filenameHashing: false,
+    // chainWebpack: config => {
+    //     // 清除css，js版本号
+    //     config.output.filename('js/[name].js');
+    //     config.output.chunkFilename('js/[name].js');
+    //     // 为生产环境修改配置...
+    //     config.plugin('extract-css').tap(args => [{
+    //         filename: `css/[name].css`,
+    //         chunkFilename: `css/[name].css`
+    //     }])
+    // }
 };
